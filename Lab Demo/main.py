@@ -1,11 +1,11 @@
 import csv
 
-inFile = open("LabDemo.csv", 'r')
-outFile = open("CustomerSummary.txt", 'w')
+inFile = open('LabDemo.csv', 'r')
+outFile = open('CustomerSummary.txt', 'w')
 inReader = csv.reader(inFile, delimiter=',')
 allPurchases = []
-uniqueCustomers = []
-uniqueItems = []
+uniqueCustomers = set()
+uniqueItems = set()
 
 
 class Purchase(object):
@@ -17,12 +17,10 @@ class Purchase(object):
 
 
 for line in inReader:
-    if line[0] != "custName":
+    if line[0] != 'custName':
         allPurchases.append(Purchase(cust=line[0], sku=line[1], qty=float(line[2]), price=float(line[3])))
-        if line[0] not in uniqueCustomers:
-            uniqueCustomers.append(line[0])
-        if line[1] not in uniqueItems:
-            uniqueItems.append(line[1])
+        uniqueCustomers.add(line[0])  # Sets will automatically remove duplicate entries
+        uniqueItems.add(line[1])
 inFile.close()
 
 for customer in sorted(uniqueCustomers):
@@ -32,12 +30,12 @@ for customer in sorted(uniqueCustomers):
         totalItems = 0
         for purchase in allPurchases:
             if customer in purchase.customer and item in purchase.SKU:
-                totalSpent = totalSpent + (float(purchase.QTY) * float(purchase.price))
-                totalItems = totalItems + int(purchase.QTY)
+                totalSpent += (float(purchase.QTY) * float(purchase.price))
+                totalItems += int(purchase.QTY)
         if totalItems > 0:
             average = totalSpent / totalItems
             outFile.write('Average Price for ' + item + ': $' + str("%.2f" % average) + '\n')
-        if totalItems == 0:
+        else:
             outFile.write('Average Price for ' + item + ': No purchase history \n')
     outFile.write("\n")
 outFile.close()
