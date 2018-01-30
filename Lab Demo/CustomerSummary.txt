@@ -1,0 +1,12 @@
+Customer: LV
+Average Price for A: $4.38
+Average Price for T: $2.51
+
+Customer: RY
+Average Price for A: $2.36
+Average Price for T: No purchase history 
+
+Customer: WX
+Average Price for A: $3.36
+Average Price for T: $2.54
+
