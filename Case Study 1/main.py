@@ -13,7 +13,7 @@ totalTime = 0.0
 totalDelays = 0.0
 
 
-def calcTFT(d, lori, ldes ):
+def calctft(d, lori, ldes):
     return .117 * d + .517 * (lori - ldes) + 20;
 
 
@@ -43,12 +43,12 @@ inFile.close()
 avgDelay = totalDelays / len(allFlights)
 
 print str(len(allFlights)) + " Valid Observances"
-print "Target Flight Time: " + str(calcTFT(1741.16, -87.9, -118.41))
-print "Typical Time: " + str(calcTFT(1741.16, -87.9, -118.41) + avgDelay)
+print "Target Flight Time: " + str(calctft(1741.16, -87.9, -118.41))
+print "Typical Time: " + str(calctft(1741.16, -87.9, -118.41) + avgDelay)
 
 outFile.write(str(len(allFlights)) + " Valid Observances \n")
-outFile.write("Target Flight Time: " + str(calcTFT(1741.16, -87.9, -118.41)) + "\n")
-outFile.write("Typical Time: " + str(calcTFT(1741.16, -87.9, -118.41) + avgDelay) + "\n")
+outFile.write("Target Flight Time: " + str(calctft(1741.16, -87.9, -118.41)) + "\n")
+outFile.write("Typical Time: " + str(calctft(1741.16, -87.9, -118.41) + avgDelay) + "\n")
 
 
 for carrier in uniqueCarriers:
@@ -56,8 +56,10 @@ for carrier in uniqueCarriers:
     numCarrierFlights = 0.0
     for flight in allFlights:
         if carrier in flight.carrier:
-            carrierDelay += flight.departureDelay + flight.arrivalDelay
-            numCarrierFlights += 1
+            #carrierDelay += flight.departureDelay + flight.arrivalDelay
+            #  Not technical delay, but delay based on typical time
+            carrierDelay += flight.flightTime - (calctft(1741.16, -87.9, -118.41) + avgDelay)
+            numCarrierFlights += 1.0
     avgCarrierDelay.append((carrierDelay / numCarrierFlights))
 
     print carrier + " averaged a " + str(carrierDelay / numCarrierFlights) + " min delay with a total delay of " \
@@ -81,9 +83,8 @@ plt.xticks(range(len(uniqueCarriers)), uniqueCarriers)
 
 
 plt.title('Average Airliner Flight Delay')
-plt.ylabel('Avg. Delay')
+plt.ylabel('Avg. Delay (Min.)')
 plt.xlabel('Airline Carrier')
 
 plt.show()
 
-print avgDelay
