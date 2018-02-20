@@ -1,0 +1,9 @@
+729 Valid Observances 
+Target Flight Time: 239.48939
+Typical Time: 263.121763114
+AA averaged a 16.6280701754 min delay with a total delay of 4739.0 min across 285.0 flights
+F9 averaged a 36.5862068966 min delay with a total delay of 1061.0 min across 29.0 flights
+NK averaged a 31.9661016949 min delay with a total delay of 1886.0 min across 59.0 flights
+UA averaged a 31.1644295302 min delay with a total delay of 9287.0 min across 298.0 flights
+VX averaged a 4.39655172414 min delay with a total delay of 255.0 min across 58.0 flights
+Fastest Carrier: VX
