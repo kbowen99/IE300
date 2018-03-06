@@ -14,7 +14,7 @@ totalDelays = 0.0
 
 
 def calctft(d, lori, ldes):
-    return .117 * d + .517 * (lori - ldes) + 20;
+    return .117 * d + .517 * (lori - ldes) + 20
 
 
 class Flight(object):
@@ -56,7 +56,7 @@ for carrier in uniqueCarriers:
     numCarrierFlights = 0.0
     for flight in allFlights:
         if carrier in flight.carrier:
-            #carrierDelay += flight.departureDelay + flight.arrivalDelay
+            # carrierDelay += flight.departureDelay + flight.arrivalDelay
             #  Not technical delay, but delay based on typical time
             carrierDelay += flight.flightTime - (calctft(1741.16, -87.9, -118.41) + avgDelay)
             numCarrierFlights += 1.0
@@ -87,4 +87,3 @@ plt.ylabel('Avg. Delay (Min.)')
 plt.xlabel('Airline Carrier')
 
 plt.show()
-
