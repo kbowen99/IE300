@@ -1,0 +1,8 @@
+JFK-LAS on AA Will Not be delayed. 
+Probability of a delay: 0.00286474176278 Probability No Delay: 0.0133287668059
+JFK-LAS on B6 Will Not be delayed. 
+Probability of a delay: 0.0033915908226 Probability No Delay: 0.00934114157403
+SFO-ORD on VX Will Not be delayed. 
+Probability of a delay: 0.00833700185121 Probability No Delay: 0.0261965664038
+SFO-ORD on WN Will Not be delayed. 
+Probability of a delay: 0.00418951857733 Probability No Delay: 0.0154267142483
