@@ -13,10 +13,12 @@ totalTime = 0.0
 totalDelays = 0.0
 
 
+# TFT Equation used in Exercise
 def calctft(d, lori, ldes):
     return .117 * d + .517 * (lori - ldes) + 20
 
 
+# Flight Object used to store information from file.
 class Flight(object):
     def __init__(self, fd=None, carrier=None, flightNum=0, origin=None, dest=None, depT=0, depD=0, arrT=0, arrD=0, ft=0):
         self.flightDate = fd
@@ -31,6 +33,7 @@ class Flight(object):
         self.flightTime = int(ft)
 
 
+# Store all pertinent information from the provided file
 for line in inReader:
     # Not Header & Greater than 230 min long (valid info)
     if line[0] != 'Flight Time' and line[5] != "" and line[7] != "" and line[9] > 230:
@@ -42,15 +45,18 @@ for line in inReader:
 inFile.close()
 avgDelay = totalDelays / len(allFlights)
 
+# Debugging output
 print str(len(allFlights)) + " Valid Observances"
 print "Target Flight Time: " + str(calctft(1741.16, -87.9, -118.41))
 print "Typical Time: " + str(calctft(1741.16, -87.9, -118.41) + avgDelay)
 
+# Raw Text Output
 outFile.write(str(len(allFlights)) + " Valid Observances \n")
 outFile.write("Target Flight Time: " + str(calctft(1741.16, -87.9, -118.41)) + "\n")
 outFile.write("Typical Time: " + str(calctft(1741.16, -87.9, -118.41) + avgDelay) + "\n")
 
 
+# Compute avg Delays for each unique ccarrier
 for carrier in uniqueCarriers:
     carrierDelay = 0.0
     numCarrierFlights = 0.0
@@ -68,6 +74,7 @@ for carrier in uniqueCarriers:
           + str(carrierDelay) + " min across " + str(numCarrierFlights) + " flights" + "\n")
 
 
+# Read through list to find smallest value (There's probably a better way to do this)
 minLength = avgCarrierDelay[0]
 minCarrier = list(uniqueCarriers)[0]
 for i in range(0, len(uniqueCarriers)):
@@ -78,6 +85,7 @@ for i in range(0, len(uniqueCarriers)):
 print "Fastest Carrier: " + str(minCarrier)
 outFile.write("Fastest Carrier: " + str(minCarrier) + "\n")
 
+# Graphing code from tutorial
 plt.bar(range(len(uniqueCarriers)), avgCarrierDelay, align='center')
 plt.xticks(range(len(uniqueCarriers)), uniqueCarriers)
 

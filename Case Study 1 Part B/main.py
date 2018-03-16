@@ -9,10 +9,12 @@ uniqueOrigins = set()
 uniqueDestinations = set()
 
 
+# Naive Bayes Equation that will be used several times later
 def pGiven(n_hat=0.0, m=3.0, p=0.0, n=0.0):
     return (n_hat + (m * p)) / (n + m)
 
 
+# Flight Object that stores relevant information
 class Flight(object):
     def __init__(self, carr=None, orig=None, dest=None, depD=0, arrD=0, isDelayed=False):
         self.carrier = carr
@@ -23,6 +25,7 @@ class Flight(object):
         self.delayed = isDelayed
 
 
+# Only desired delays will be computed (May be useful on larger data sets)
 desiredDelays = list()
 desiredDelays.append(Flight(carr="AA", orig="JFK", dest="LAS"))
 desiredDelays.append(Flight(carr="B6", orig="JFK", dest="LAS"))
@@ -30,9 +33,11 @@ desiredDelays.append(Flight(carr="VX", orig="SFO", dest="ORD"))
 desiredDelays.append(Flight(carr="WN", orig="SFO", dest="ORD"))
 
 
+# Load data from file
 for line in inReader:
     # Not Header & Greater than 230 min long (valid info)
     if line[0] != 'Carrier':
+        # Y/N Delay categorization
         if int(line[3]) + int(line[4]) < 16:
             allFlights.append(Flight(carr=line[0], orig=line[1], dest=line[2], depD=line[3], arrD=line[4], isDelayed=False))
         else:
@@ -40,11 +45,11 @@ for line in inReader:
         uniqueCarriers.add(line[0])
         uniqueOrigins.add(line[1])
         uniqueDestinations.add(line[2])
-
 inFile.close()
 
 print str(len(allFlights)) + " Recorded Data Points."
 
+# Raw number of delays, probably should be calculated during data loading...
 numDelays = 0.0
 for plane in allFlights:
     if plane.delayed:
@@ -53,6 +58,7 @@ print str(numDelays) + " Recorded Delays."
 print "P(Y)=" + str(numDelays / len(allFlights)) + "; P(N)=" + str(1 - (numDelays / len(allFlights)))
 
 
+# Categorical Probabilities
 pYes = numDelays / len(allFlights)
 pNo = 1.0 - pYes
 pOrigin = 1.0 / len(uniqueOrigins)
@@ -60,6 +66,7 @@ pDestination = 1.0 / len(uniqueDestinations)
 pCarrier = 1.0 / len(uniqueCarriers)
 
 
+# For each desired flight, calculate the probability of a delay
 for wFlight in desiredDelays:
     airlineCarrier = wFlight.carrier
     origin = wFlight.origin
