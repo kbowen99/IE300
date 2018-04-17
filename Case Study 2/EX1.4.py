@@ -1,29 +1,26 @@
-import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
-import scipy as sp
-import scipy.misc as spm
 import math
-from matplotlib import style
-import csv
 
 # Configuration Variables
-n = [1,2,10,100]
+n = [1, 2, 10, 100]
 ncolor = ["red", "green", "blue", "black"]
+nlabel = ["n=1", "n=2", "n=10", "std. normal"]
+
 # Std. Normal
 mu = 0
 variance = 1
 sigma = math.sqrt(variance)
 
 # Actual Plotting
-X = np.linspace(mu - (3*sigma), mu + (3*sigma), 256, endpoint=True)
-
+Xv = np.linspace(mu - (3.0 * sigma), mu + (3.0 * sigma), 256, endpoint=True)
 for i in range(0, len(n)):
-    yn = n[i]**(n[i]-1 /2)/spm.factorial(n[i]-1)*(1+X/n[i]**.5)**(n[i]-1)*np.exp(-n[i]*(1+X/n[i]**.5))
-    plt.plot(X, yn, color=ncolor[i])
-    print n[i]
+    plt.plot(Xv, (n[i]**(n[i]-0.5))/(math.factorial(n[i]-1)) *
+             (1 + Xv/np.sqrt(n[i]))**(n[i]-1) * np.exp(-n[i]*(1+Xv/math.sqrt(n[i]))), color=ncolor[i], label='test')
 
-plt.ylim(0,9)
+# Formatting
+plt.legend(nlabel)
+plt.ylim(0, 1)
 plt.title('Central limit of fYn(y)')
 plt.ylabel('Probability')
 plt.xlabel('Density')
