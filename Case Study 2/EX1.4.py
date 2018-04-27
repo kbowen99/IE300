@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 # Configuration Variables
-n = [1, 2, 10, 100]
+n = [1, 2, 10, 128]
 ncolor = ["red", "green", "blue", "black"]
 nlabel = ["n=1", "n=2", "n=10", "std. normal"]
 
@@ -12,14 +12,15 @@ mu = 0
 variance = 1
 sigma = math.sqrt(variance)
 
-# Actual Plotting
+# Plotting each n
 Xv = np.linspace(mu - (3.0 * sigma), mu + (3.0 * sigma), 256, endpoint=True)
 for i in range(0, len(n)):
     plt.plot(Xv, (n[i]**(n[i]-0.5))/(math.factorial(n[i]-1)) *
-             (1 + Xv/np.sqrt(n[i]))**(n[i]-1) * np.exp(-n[i]*(1+Xv/math.sqrt(n[i]))), color=ncolor[i], label='test')
+             (1 + Xv/np.sqrt(n[i]))**(n[i]-1) * np.exp(-n[i]*(1+Xv/math.sqrt(n[i]))), color=ncolor[i])
 
 # Formatting
 plt.legend(nlabel)
+plt.xlim((mu - (3.0 * sigma)), (mu + (3.0 * sigma)))
 plt.ylim(0, 1)
 plt.title('Central limit of fYn(y)')
 plt.ylabel('Probability')
